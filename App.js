@@ -1,25 +1,19 @@
 
 import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import AppNavigator from './src/navigations/Navigator'
+import AppNavigator from './src/navigations/Navigator';
+import Navigator from './src/routes/drawer';
 import * as Font from 'expo-font';
 import {AppLoading} from 'expo';
 
 export default class App extends React.Component {
-  // state = {
-  //   isFontLoaded:false
-  // }
-  // async componentDidMount(){
-  //   await Font.loadAsync({
-  //     'Bold' : require('./src/fonts/TimesNewRomanBold.ttf'),
-  //     'Regular' : require('./src/fonts/TimesNewRoman.ttf'),
-  //   });
-  //   this.setState({isFontLoaded:true})
-  // }
+  
   render() {
     return (
-        <AppNavigator/>
+        <Navigator/>
         
       );
   }

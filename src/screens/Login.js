@@ -16,7 +16,7 @@ export default class Login extends React.Component{
             alert('Incorrect Email Address or Password')
         } else {
             const {navigate} = this.props.navigation
-            navigate('Welcome')
+            navigate('Progress')
         }
     }
     
