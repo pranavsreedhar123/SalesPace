@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {StyleSheet, Text, View, ScrollView, TextInput,FlatList,ActivityIndicator} from 'react-native';
+import { sub } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/AntDesign'
 import MiniCard from './MiniCard';
 Icon.loadFont();
@@ -13,41 +14,65 @@ const SearchScreen = ()=>{
         const [loading,setLoading] = useState(false)
         const fetchData = () => {
             setLoading(true)
-            fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${value}&regionCode=IN&key=AIzaSyBFVDyp48Uk0a9rcGcP9a4lKdKkRQRG4FU`)
+            fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=${value}&regionCode=IN&key=AIzaSyBFVDyp48Uk0a9rcGcP9a4lKdKkRQRG4FU`)
             .then(res=>res.json())
             .then(data=>{
                 setLoading(false)
                 setMiniCard(data.items)
             })
             
+            filter()
+            //alert(subscribers[0].statistics.subscriberCount)
+        }
+        const filter = () => {
             let duplicate = false
             let index = 1
             filterMiniCardData[0] = miniCardData[0]
-            
+            //alert(miniCardData[0])
             for(let i = 1; i < miniCardData.length; i++) {
-                let x = i - 1
-                while(x >= 0 && duplicate === false){
-                    if(miniCardData[i].snippet.channelTitle === miniCardData[x].snippet.channelTitle){
-                        duplicate = true
+                if(index <= 4){
+                    let x = i - 1
+                    while(x >= 0 && duplicate === false){
+                        if(miniCardData[i].snippet.channelTitle === miniCardData[x].snippet.channelTitle){
+                            duplicate = true
+                        }
+                        x--
                     }
-                    x--
-                }
-                if (duplicate === false) {
-                    filterMiniCardData[index] = miniCardData[i]
-                    index++
+                    if (duplicate === false) {
+                        filterMiniCardData[index] = miniCardData[i]
+                        index++
+                    }
                 }
             }
-            filterCard(filterMiniCardData)
+            //alert(filterMiniCardData.length)
             
-            for(let i = 0; i < miniCardData.length; i++) {
+            
+            for(let i = 0; i < filterMiniCardData.length; i++) {
                 //alert(filterData[i].snippet.channelId)
-                fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${miniCardData[i].snippet.channelId}&key=AIzaSyBFVDyp48Uk0a9rcGcP9a4lKdKkRQRG4FU`)
+                fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${filterMiniCardData[i].snippet.channelId}&key=AIzaSyBFVDyp48Uk0a9rcGcP9a4lKdKkRQRG4FU`)
                 .then(response=>response.json())
                 .then(result=>{
                     setSubData(result.items)
                 })
             }
-            //alert(subscribers[0].statistics.subscriberCount)
+            for(let i = 0; i < subscribers.length; i++) {
+                let min = i;
+                for(let j = i+1; j < subscribers.length; j++){
+                    if(subscribers[j].statistics.hiddenSubscriberCount == 'false' && subscribers[min].statistics.hiddenSubscriberCount == 'false')
+                        if(subscribers[j].statistics.subscriberCount < subscribers[min].statistics.subscriberCount) {
+                            min=j; 
+                        }
+                 }
+                 if (min != i) {
+                     let tempS = subscribers[i]; 
+                     let tempF = filterMiniCardData[i];
+                     subscribers[i] = subscribers[min];
+                     filterMiniCardData[i] = filterMiniCardData[min];
+                     subscribers[min] = tempS;
+                     filterMiniCardData[min] = tempF;    
+                }
+            }
+            filterCard(filterMiniCardData)
         }
 
         
@@ -68,8 +93,8 @@ const SearchScreen = ()=>{
                     onPress = {()=>fetchData()} />
             </View>
             {loading ? <ActivityIndicator style={{marginTop:10}} size="large" color="red"/>: null}
-            <FlatList
-                data={miniCardData} 
+            <FlatList 
+                data={filterData} 
                 // data={filterData} ---> filtered 
                 initialNumToRender="5"
                 renderItem={({item})=>{

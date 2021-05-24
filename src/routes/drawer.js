@@ -8,19 +8,19 @@ import GPStack from './GPStack';
 import VideoStack from './VideoStack';
 
 const RootDrawerNavigator = createDrawerNavigator({
-    Home: {
+    'Home': {
         screen: HomeStack,
     },
-    Government_Projects: {
+    'Government Projects': {
         screen: GPStack,
     },
-    Trade_Fairs: {
+    'Trade Fairs': {
         screen: TFStack,
     },
-    Track_Top_Vloggers: {
+    'Track Top Vloggers': {
         screen: TTVStack,
     },
-    Video_Stack: {
+    'Video': {
         screen: VideoStack,
     },
     
