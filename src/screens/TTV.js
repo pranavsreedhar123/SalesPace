@@ -4,6 +4,7 @@ import { sub } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/AntDesign'
 import MiniCard from './MiniCard';
 Icon.loadFont();
+
 const SearchScreen = ()=>{
         var subArr = [];
         var filterMiniCardData = [];
@@ -14,7 +15,7 @@ const SearchScreen = ()=>{
         const [loading,setLoading] = useState(false)
         const fetchData = () => {
             setLoading(true)
-            fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=${value}&regionCode=IN&key=AIzaSyBY3Cjd3uovUDlwzcX4L8Lfa8UJugywF4Y`)
+            fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${value}&regionCode=IN&key=AIzaSyBp9mm_DRzI1hcX2QWyfsSqgyFFav57brI`)
             .then(res=>res.json())
             .then(data=>{
                 setLoading(false)

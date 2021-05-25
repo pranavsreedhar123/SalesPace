@@ -15,8 +15,7 @@ export default class Login extends React.Component{
         if(email!=="pranavsreedhar2002@gmail.com" || password!=="password123") {
             alert('Incorrect Email Address or Password')
         } else {
-            const {navigate} = this.props.navigation
-            navigate('Progress')
+            this.props.navigation.navigate('app')
         }
     }
     
@@ -96,7 +95,7 @@ export default class Login extends React.Component{
                     paddingVertical:8
                 }}>
                     <Text 
-                        onPress={()=>navigate('Register')}
+                        onPress={()=>this.props.navigation.navigate('Register')}
                         style={styles.text}>Sign Up
                     </Text>
                 </View>
