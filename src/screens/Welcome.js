@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/AntDesign'
 Icon.loadFont();
 export default class Welcome extends React.Component{
     
-    
     render(){
         const {navigate} = this.props.navigation
         return(

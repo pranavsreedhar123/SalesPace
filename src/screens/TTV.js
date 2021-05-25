@@ -14,7 +14,7 @@ const SearchScreen = ()=>{
         const [loading,setLoading] = useState(false)
         const fetchData = () => {
             setLoading(true)
-            fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=${value}&regionCode=IN&key=AIzaSyBFVDyp48Uk0a9rcGcP9a4lKdKkRQRG4FU`)
+            fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=${value}&regionCode=IN&key=AIzaSyBY3Cjd3uovUDlwzcX4L8Lfa8UJugywF4Y`)
             .then(res=>res.json())
             .then(data=>{
                 setLoading(false)
@@ -27,6 +27,9 @@ const SearchScreen = ()=>{
         const filter = () => {
             let duplicate = false
             let index = 1
+            if(miniCardData[0] == null) {
+                fetchData()
+            }
             filterMiniCardData[0] = miniCardData[0]
             //alert(miniCardData[0])
             for(let i = 1; i < miniCardData.length; i++) {
