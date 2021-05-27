@@ -64,7 +64,7 @@ export default class Login extends React.Component{
                     <TextInput 
                         secureTextEntry
                         autoCapitalize="none"
-                        placeholder="Password"
+                        placeholder="Pssword"
                         style={styles.input}
                         returnKeyLabel={"next"}
                         onChangeText={(text)=>this.setState({password:text})}
